@@ -6,9 +6,11 @@ import "codemirror/theme/dracula.css";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
 import "codemirror/lib/codemirror.css";
-
+import axios from "axios";
+import { useState } from "react";
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
+  const [output, setOutput] = useState("");
   useEffect(() => {
     async function init() {
       editorRef.current = Codemirror.fromTextArea(
@@ -22,7 +24,6 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         }
       );
       editorRef.current.on("change", (instance, changes) => {
-        // console.log(changes);
         const { origin } = changes;
         const code = instance.getValue();
         onCodeChange(code);
@@ -51,7 +52,32 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
     };
   }, [socketRef.current]);
 
-  return <textarea id="realtimeEditor"></textarea>;
+  const runCode = async () => {
+    try {
+      const code = editorRef.current.getValue();
+      const response = await axios.post("http://localhost:3000/run-code", {
+        code,
+      });
+      console.log(response.data);
+      setOutput(response.data);
+    } catch (error) {
+      setOutput(error.response ? error.response.data : error.message);
+    }
+  };
+
+  return (
+    <div>
+      <textarea id="realtimeEditor"></textarea>
+      <div className=" btnContainer">
+        <button className="btn runBtn" onClick={runCode}>
+          Run
+        </button>
+        <button className="btn outputBtn" onClick={runCode}>
+          Output
+        </button>
+      </div>
+    </div>
+  );
 };
 
 Editor.propTypes = {
