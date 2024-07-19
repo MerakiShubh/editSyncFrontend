@@ -145,16 +145,13 @@ footer a:hover {
   padding-top: 20px;
 }
 
-.runBtn,
-.outputBtn {
-  color: #424242;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-  background: #2b824c;
+.greenBtn {
+  background-color: #4aed88;
+  color: #fff;
 }
 
-.outputBtn:hover {
-  background: #2b824c;
+.greenBtn:hover {
+  background-color: #3ecc6e;
 }
 
 .btnContainer {
@@ -164,4 +161,72 @@ footer a:hover {
   position: absolute;
   top: 25px;
   right: 60px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #282a36;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.modalBody {
+  margin-top: 10px;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.spinnerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
