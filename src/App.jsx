@@ -9,14 +9,13 @@ function App() {
         position="top-right"
         toastOptions={{
           success: {
-            theme: {
-              primary: "#FF7F50",
+            style: {
+              background: "#FF7F50",
+              color: "#fff",
             },
           },
         }}
-      >
-        {" "}
-      </Toaster>
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

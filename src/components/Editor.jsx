@@ -59,5 +59,4 @@ Editor.propTypes = {
   roomId: PropTypes.string.isRequired,
   onCodeChange: PropTypes.func.isRequired,
 };
-
 export default Editor;
