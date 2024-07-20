@@ -86,16 +86,15 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       const code = editorRef.current.getValue();
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/run-code`,
-        {
-          code,
-        }
+        { code }
       );
       setIsSuccess(response.data.success);
-      setOutput(response.data.output);
+      setOutput(response.data.output.toString()); // Ensure output is a string
       setIsModalOpen(true);
     } catch (error) {
       setIsSuccess(false);
-      setOutput(error.response ? error.response.data : error.message);
+      const errorMessage = error.response ? error.response.data : error.message;
+      setOutput(errorMessage.toString()); // Ensure output is a string
       setIsModalOpen(true);
     } finally {
       setIsLoading(false);
