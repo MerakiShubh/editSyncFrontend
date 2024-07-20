@@ -10,9 +10,10 @@ import {
   useParams,
 } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import MessageService from "../components/MessageService";
 const EditorPage = () => {
   const [clients, setClients] = useState([]);
+  const [showMessageService, setShowMessageService] = useState(false);
   const socketRef = useRef(null);
   const codeRef = useRef(null);
   const location = useLocation();
@@ -111,11 +112,21 @@ const EditorPage = () => {
         <button className="btn copyBtn" onClick={copyRoomId}>
           Copy ROOM ID
         </button>
+        =
+        <button
+          className="btn messageBtn"
+          onClick={() => setShowMessageService(true)}
+        >
+          Send Room ID
+        </button>
         <button className="btn leaveBtn" onClick={leaveRoom}>
           Leave
         </button>
       </div>
       <div className="editorWrap">
+        {showMessageService && (
+          <MessageService onClose={() => setShowMessageService(false)} />
+        )}
         <Editor
           socketRef={socketRef}
           roomId={roomId}

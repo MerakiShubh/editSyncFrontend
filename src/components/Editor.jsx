@@ -9,7 +9,6 @@ import "codemirror/lib/codemirror.css";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import OutputModal from "./OutputModal";
-
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
   const [output, setOutput] = useState("");
@@ -62,9 +61,12 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
     setIsLoading(true);
     try {
       const code = editorRef.current.getValue();
-      const response = await axios.post("http://localhost:3000/run-code", {
-        code,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/run-code`,
+        {
+          code,
+        }
+      );
       setIsSuccess(response.data.success);
       setOutput(response.data.output);
       setIsModalOpen(true);
