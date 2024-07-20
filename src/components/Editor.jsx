@@ -3,18 +3,41 @@ import PropTypes from "prop-types";
 import Codemirror from "codemirror";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/dracula.css";
+import "codemirror/theme/monokai.css";
+import "codemirror/theme/solarized.css";
+import "codemirror/theme/material.css";
+import "codemirror/theme/nord.css";
+import "codemirror/theme/gruvbox-dark.css";
+import "codemirror/theme/night.css";
+import "codemirror/theme/twilight.css";
+import "codemirror/theme/oceanic-next.css";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
 import "codemirror/lib/codemirror.css";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import OutputModal from "./OutputModal";
+
+const themes = [
+  "dracula",
+  "monokai",
+  "solarized dark",
+  "solarized light",
+  "material",
+  "nord",
+  "gruvbox-dark",
+  "night",
+  "twilight",
+  "oceanic-next",
+];
+
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
   const [output, setOutput] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState("dracula");
 
   useEffect(() => {
     async function init() {
@@ -22,7 +45,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         document.getElementById("realtimeEditor"),
         {
           mode: { name: "javascript", json: true },
-          theme: "dracula",
+          theme: selectedTheme,
           autoCloseTags: true,
           autoCloseBrackets: true,
           lineNumbers: true,
@@ -79,6 +102,11 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
     }
   };
 
+  const handleThemeChange = (event) => {
+    setSelectedTheme(event.target.value);
+    editorRef.current.setOption("theme", event.target.value);
+  };
+
   return (
     <div className="editorContainer">
       <textarea id="realtimeEditor"></textarea>
@@ -86,6 +114,17 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         <button className="btn greenBtn" onClick={runCode}>
           Run
         </button>
+        <select
+          className="btn greenBtn"
+          value={selectedTheme}
+          onChange={handleThemeChange}
+        >
+          {themes.map((theme) => (
+            <option key={theme} value={theme}>
+              {theme}
+            </option>
+          ))}
+        </select>
       </div>
       {isLoading && (
         <div className="spinnerOverlay">
