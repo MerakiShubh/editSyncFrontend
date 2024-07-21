@@ -93,7 +93,9 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       setIsModalOpen(true);
     } catch (error) {
       setIsSuccess(false);
-      const errorMessage = error.response ? error.response.data : error.message;
+      const errorMessage = error.response
+        ? error.response.data.output
+        : error.message;
       setOutput(errorMessage.toString()); // Ensure output is a string
       setIsModalOpen(true);
     } finally {
